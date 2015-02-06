@@ -76,4 +76,13 @@ public class Utils {
 //		Log.i("TAG", "rev="+rev);
 		return rev;
 	}
+	
+	/**
+	 * 
+	 * @param order int类型的订单号，进行短信支付，暂时考虑使用GET_URL_ORER移动MM的进行支付
+	 * @return
+	 */
+	public static String smsPay(int order){
+		return null;
+	}
 }
