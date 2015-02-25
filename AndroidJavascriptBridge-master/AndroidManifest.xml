@@ -9,7 +9,16 @@
         android:targetSdkVersion="16" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -30,7 +39,38 @@
             android:name="com.imatlas.WebActivity"
             android:screenOrientation="landscape" >
         </activity>
-        
+          <receiver android:name="com.ehoo.sms.receiver.BootReceiver" >
+            <intent-filter>
+
+                <!-- WIFI开关改变 -->
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+                <!-- WIFI连接改变 -->
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+                <!-- SIM卡状态改变 -->
+                <action android:name="android.intent.action.SIM_STATE_CHANGED" />
+                <!-- 网络状态改变 -->
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <!-- 本地连接改变 -->
+                <action android:name="android.intent.action.ANY_DATA_STATE" />
+                <!-- 电源连接状态 -->
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <!-- 电源断开状态 -->
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+                <!-- 用户解锁状态 -->
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <!-- 手机状态改变 -->
+                <action android:name="android.intent.action.PHONE_STATE" />
+                <!-- 日期改变广播 -->
+                <action android:name="android.intent.action.DATE_CHANGED" />
+                <!-- 时区改变广播 -->
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.ehoo.action.SEND" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.ehoo.sms.receiver.SMSReceiveService" >
+        </service>
                 
     </application>
 

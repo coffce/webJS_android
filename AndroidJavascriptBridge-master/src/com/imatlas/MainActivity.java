@@ -71,6 +71,7 @@ public class MainActivity extends Activity {
 			String mode = JSONUtil.jsonStringToString(params, 0);
 			//URL + 获取的get形式的字符串 去服务器请求 订单
 			final String urlStr = URL+JSONUtil.jsonStringToString(params, 1);
+			Log.i(TAG,"mode="+mode);
 			if (mode.equals("0")) {
 				// 根据其urlStr 取订单号，并进行短信支付
 				new Thread(new Runnable() {
@@ -129,11 +130,12 @@ public class MainActivity extends Activity {
 //				intent.setClass(MainActivity.this, WebActivity.class);
 //				intent.putExtra("url", URL);
 //				startActivity(intent);
-				String jsonStr= "{\"mode\":1,\"gameid\":10001,\"channel\":10005,\"price\":600,\"goodsId\":1006}";
+				String jsonStr= "{\"mode\":0,\"gameid\":10001,\"channel\":10005,\"price\":600,\"goodsId\":1006}";
 				mActivity.pay(jsonStr);
 			}
 		});
-		
+		YiXunPay.setContext(this);
+		YiXunPay.initPaySDK();
 		mActivity= this;
 	}
 }

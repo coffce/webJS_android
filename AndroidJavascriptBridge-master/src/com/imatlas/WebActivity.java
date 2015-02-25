@@ -77,7 +77,6 @@ public class WebActivity extends Activity {
             }
         });
         
-        
         webView.setWebViewClient(new WebViewClient() {  
         	  
             @Override  
@@ -90,21 +89,16 @@ public class WebActivity extends Activity {
                     String description, String failingUrl) {  
               //加载网页出错时的处理
             }  
-  
             @Override  
             public boolean shouldOverrideUrlLoading(WebView view, String url) {  
             	pbar.setVisibility(View.VISIBLE);
                 view.loadUrl(url);  
                 return true;  
             }  
-  
         });  
-        
         webView.loadUrl(url);
 
     }
-    
-    
 	private long exitTime = 0;
 
 	@Override
