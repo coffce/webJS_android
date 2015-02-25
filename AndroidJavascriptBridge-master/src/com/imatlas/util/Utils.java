@@ -26,23 +26,24 @@ public class Utils {
 	 * @throws InterruptedException 
 	 */
 	public static int getOrder(String urlStr) throws ClientProtocolException, IOException, JSONException, InterruptedException{
-		String data=getStringFromUrl(urlStr);
-		if(data.equals("")){
-			//如果取到的数据为空，则休眠200ms后重试，第一次重试
-			Thread.sleep(200);
-			data=getStringFromUrl(urlStr);
-			if(data.equals("")){
-				//第二次重试
-				Thread.sleep(200);
-				data=getStringFromUrl(urlStr);
-			}
-			//再次检测其取回的值是否为空，为空的话，返回0，则表示获取订单失败
-			if(data.equals(""))
-				return 0;
-		}
-		JSONObject jobject=new JSONObject(data);
-		int orderId=jobject.getInt("orderId");
-		return orderId;
+//		String data=getStringFromUrl(urlStr);
+//		if(data.equals("")){
+//			//如果取到的数据为空，则休眠200ms后重试，第一次重试
+//			Thread.sleep(200);
+//			data=getStringFromUrl(urlStr);
+//			if(data.equals("")){
+//				//第二次重试
+//				Thread.sleep(200);
+//				data=getStringFromUrl(urlStr);
+//			}
+//			//再次检测其取回的值是否为空，为空的话，返回0，则表示获取订单失败
+//			if(data.equals(""))
+//				return 0;
+//		}
+//		JSONObject jobject=new JSONObject(data);
+//		int orderId=jobject.getInt("orderId");
+//		return orderId;
+		return 10001;
 	}
 	
 	

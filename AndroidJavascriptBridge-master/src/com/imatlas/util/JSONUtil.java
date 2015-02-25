@@ -1,24 +1,14 @@
-/**
- * @author azrael
- * @date 2013-2-6
- */
 package com.imatlas.util;
-
 import android.os.Bundle;
-
+import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
-/**
- * @author azrael
- *
- */
 public class JSONUtil {
+	private static String TAG ="JSONUtil";
 	/**
 	 * 把 bundle 转换成 json 对象, 只取用 String, Boolean, Integer, Long, Double
 	 * 
@@ -62,6 +52,7 @@ public class JSONUtil {
 	 * @throws JSONException 
 	 */
 	public static String jsonStringToString(String params,int type) throws JSONException {
+		Log.i(TAG, params);
 		JSONObject jobject= new JSONObject(params);
 		if(type==0){
 			return jobject.getString("mode");
@@ -77,5 +68,9 @@ public class JSONUtil {
 		}
 	}
 	
+	//短信支付后的结果传给c++层或者lua层
+	public static String payTojsonString(int order,int status){
+		return "{\"order\":"+order+",\"status\":"+status+"}";
+	}
 
 }

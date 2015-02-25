@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.imatlas.util.JSONUtil;
 import com.imatlas.util.Utils;
+import com.imatlas.util.YiXunPay;
 
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
@@ -22,26 +23,47 @@ import org.json.JSONException;
 public class MainActivity extends Activity {
 	//设置取到订单号的标记为1
 	public static final int GET_URL_ORER=1;
-	//短信支付后，不管结果是否失败，定义其线程标记为2
-	public static final int SMS_PAY=2;
-	//转至web支付，定义其返回值的标记为：3
+	//短信支付成功
+	public static final int SMS_PAY_SUCCES = 101;
+	//短信支付失败
+	public static final int SMS_PAY_FAILUEW=102;
+	//web支付的返回结果
 	public static final int WEB_PAY=3;
 	public static MainActivity mActivity=null;
 	private static final String TAG="MainActivity";
-	
+	//由于往下传递的时候，需要传递订单号，所以布局一个全局变量
+	public static int orderId=0;
 	// 用来接收：短信支付，或者web支付传过来的信息，短信支付这块，由于网络连接这部分，需要对其进行处理
 	public  Handler myHandler = new Handler() {
 		public void handleMessage(Message msg) {
-			switch(msg.what){
+			switch (msg.what) {
 			case GET_URL_ORER:
-				
+				if(orderId==0){
+					String str=JSONUtil.payTojsonString(0, 5);
+					Log.i(TAG,str+ " 取订单失败,sms支付失败");
+					mActivity.paymentCompletion(str);
+				}else{
+					//此部分调用短信的支付。
+					try {
+						YiXunPay.pay(MainActivity.this, "05", orderId, myHandler);
+					} catch (IOException e) {
+						Log.i(TAG,"支付出现异常了。");
+						e.printStackTrace();
+					}
+				}
+				break;
+			case SMS_PAY_SUCCES:
+				Log.i(TAG,JSONUtil.payTojsonString(orderId, 1)+"  sms支付成功");
+				break;
+			case SMS_PAY_FAILUEW:
+				Log.i(TAG,JSONUtil.payTojsonString(orderId, 2)+"  sms支付失败");
+				break;
+			case WEB_PAY:
 				break;
 			}
-			
 			super.handleMessage(msg);
 		}
 	};
-
 	// 定义c++层，或者lua层调用java层方法，传值上来，用的是json格式的字符串
 	public void pay(String params) {
 		// 对json格式进行解析，遍历出，然后根据不同的type值来返回不同的string字符串来进行不同的处理
@@ -56,16 +78,8 @@ public class MainActivity extends Activity {
 					public void run() {
 						//在此获取订单，由于是网络请求这部分，所以需要放在子线程当中才行
 						try {
-							int order=Utils.getOrder(urlStr);
-							if(order!=0){
-								Message msg = myHandler.obtainMessage(); 
-								//将其order 订单给赋值 给msg.arg1 
-								msg.arg1=order;
-								msg.what=GET_URL_ORER;
-								myHandler.sendMessage(msg);
-							}else{
-								Log.i(TAG,"在获取订单的时候出现问题了。。。");
-							}
+							orderId=Utils.getOrder(urlStr);
+							myHandler.sendEmptyMessage(GET_URL_ORER);
 						} catch (ClientProtocolException e) {
 							e.printStackTrace();
 						} catch (IOException e) {
@@ -83,6 +97,8 @@ public class MainActivity extends Activity {
 				Intent intent = new Intent();
 				intent.setClass(MainActivity.this, WebActivity.class);
 				intent.putExtra("url",urlStr );
+				Log.i(TAG,urlStr);
+				intent.putExtra("url", urlStr);
 				startActivity(intent);
 			}
 		} catch (JSONException e) {
@@ -92,11 +108,12 @@ public class MainActivity extends Activity {
 	}
 
 	// 当支付完成时，成功与否都通过lua层,C++层，以json格式传递过去
-	public native int add(String params);
-
+	public native int paymentCompletion(String params);
+	
 	// 模拟网络访问地址：
-	private final String URL = "http://192.168.1.159:8081/phpdemo1/?";
+	private final String URL = "http://192.168.1.180:8081/phpdemo1/?";
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -112,10 +129,11 @@ public class MainActivity extends Activity {
 //				intent.setClass(MainActivity.this, WebActivity.class);
 //				intent.putExtra("url", URL);
 //				startActivity(intent);
+				String jsonStr= "{\"mode\":1,\"gameid\":10001,\"channel\":10005,\"price\":600,\"goodsId\":1006}";
+				mActivity.pay(jsonStr);
 			}
 		});
 		
 		mActivity= this;
 	}
-
 }
