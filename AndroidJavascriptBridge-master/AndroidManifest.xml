@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -27,6 +28,7 @@
         <activity
             android:name="com.imatlas.MainActivity"
             android:label="@string/app_name"
+            android:configChanges="orientation"
             android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,44 +36,98 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name="com.imatlas.WebActivity"
             android:screenOrientation="landscape" >
         </activity>
-          <receiver android:name="com.ehoo.sms.receiver.BootReceiver" >
-            <intent-filter>
 
-                <!-- WIFI开关改变 -->
-                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
-                <!-- WIFI连接改变 -->
-                <action android:name="android.net.wifi.STATE_CHANGE" />
-                <!-- SIM卡状态改变 -->
-                <action android:name="android.intent.action.SIM_STATE_CHANGED" />
-                <!-- 网络状态改变 -->
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <!-- 本地连接改变 -->
-                <action android:name="android.intent.action.ANY_DATA_STATE" />
-                <!-- 电源连接状态 -->
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-                <!-- 电源断开状态 -->
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-                <!-- 用户解锁状态 -->
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <!-- 手机状态改变 -->
-                <action android:name="android.intent.action.PHONE_STATE" />
-                <!-- 日期改变广播 -->
-                <action android:name="android.intent.action.DATE_CHANGED" />
-                <!-- 时区改变广播 -->
-                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+     <service
+            android:name="mm.purchasesdk.iapservice.PurchaseService"
+            android:exported="true" >
+
+            <!-- android:process="mm.iapServices" > -->
+            <intent-filter android:priority="312" >
+                <action android:name="com.aspire.purchaseservice.BIND" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter android:priority="312" >
+                <action android:name="com.imatlas.purchaseservice.BIND" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <intent-filter android:priority="312" >
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="com.ehoo.action.SEND" />
+
+                <category android:name="android.intent.category.SAFIAP.COMPONENT" >
+                </category>
+            </intent-filter>
+        </service>
+        <!-- android:excludeFromRecents="true" -->
+        <!-- android:launchMode="singleInstance" -->
+        <activity
+            android:name="mm.purchasesdk.iapservice.BillingLayoutActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Translucent">
+            <intent-filter android:priority="312" >
+                <action android:name="com.imatlas.com.mmiap.activity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- android:process="safiap.framework.safframeworkmanager" begin -->
+        <service
+            android:name="safiap.framework.SafFrameworkManager"
+            android:exported="true"
+            android:process="safiap.framework" >
+            <intent-filter android:priority="632" >
+
+            <!-- ID for services declared in AIDL -->
+        		<action android:name="safiap.framework.sdk.ISAFFramework" />
+            </intent-filter>
+            <intent-filter android:priority="632" >
+                <!-- ID for services declared in AIDL -->
+                <action android:name="safiap.framework.ACTION_START_DOWNLOAD" />
+        	</intent-filter>
+        	<intent-filter android:priority="632" >
+                <!-- ID for services declared in AIDL -->
+                <action android:name="safiap.framework.ACTION_CHECK_UPDATE" />
+            </intent-filter>
+        </service>
+        <!-- receivers -->
+        <receiver android:name="safiap.framework.CheckUpdateReceiver" >
+            <intent-filter>
+                <action android:name="safiap.framework.ACTION_CANCEL_NOTIFICATION" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="safiap.GET_SHARED_DATA" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="safiap.framework.ACTION_SET_TIMER" />
             </intent-filter>
         </receiver>
-
-        <service android:name="com.ehoo.sms.receiver.SMSReceiveService" >
-        </service>
-                
+        <activity
+            android:name="safiap.framework.ui.UpdateHintActivity" 
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
+            android:configChanges="orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="safiap.framework.ACTION_TO_INSTALL" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="safiap.framework.ACTION_TO_INSTALL_IAP" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="safiap.framework.ACTION_NETWORK_ERROR_IAP" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="safiap.framework.ACTION_NETWORK_ERROR_FRAMEWORK" />
+            </intent-filter>
+        </activity>
+        <service android:name="safiap.framework.logreport.monitor.handler.LogreportHandler" android:process=":remote"/>
+       	<!-- android:process="safiap.framework.safframeworkmanager" end -->
+        
     </application>
 
 </manifest>

@@ -12,10 +12,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.imatlas.operator.IAPListener;
+import com.imatlas.operator.MobileSMSPay;
 import com.imatlas.util.JSONUtil;
 import com.imatlas.util.Utils;
-import com.imatlas.util.YiXunPay;
 
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
@@ -44,12 +46,7 @@ public class MainActivity extends Activity {
 					mActivity.paymentCompletion(str);
 				}else{
 					//此部分调用短信的支付。
-					try {
-						YiXunPay.pay(MainActivity.this, "05", orderId, myHandler);
-					} catch (IOException e) {
-						Log.i(TAG,"支付出现异常了。");
-						e.printStackTrace();
-					}
+					MobileSMSPay.order(MainActivity.this, new IAPListener(myHandler),String.valueOf(orderId));
 				}
 				break;
 			case SMS_PAY_SUCCES:
@@ -117,6 +114,17 @@ public class MainActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		//取到为某个运营商再初始化其SDK
+		int operators=Utils.getOperators(this);
+		if (operators==1){
+			//移动
+			/** 当前手机号段为移动，初始化移动支付SDK */
+			MobileSMSPay.initMoblieSms(this, new IAPListener(myHandler));
+		}else if(operators==2){
+			//联通
+		}else if(operators==3){
+			//电信
+		}
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		TextView tv = (TextView) findViewById(R.id.tv1);
@@ -134,8 +142,6 @@ public class MainActivity extends Activity {
 				mActivity.pay(jsonStr);
 			}
 		});
-		YiXunPay.setContext(this);
-		YiXunPay.initPaySDK();
 		mActivity= this;
 	}
 }
