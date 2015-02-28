@@ -64,13 +64,25 @@ public class WebActivity extends Activity {
                 //解析数据格式：{"status":'1',"text":"你好, messagebox!"}
                 try {
 					String status=params.getString("status");
+					Intent intent=new Intent();
+					//返回其
+					intent.putExtra("",params.toString() );  
 					if(status.equals("0")){
-						//关闭当前webview窗口
-//						onDestroy();
-						WebActivity.this.finish();
+						//支付失败情况
+						setResult(4, intent);
+					}else if(status.equals("6")){
+						//web请求的支付宝支付
+						setResult(1,intent);
+					}else if(status.equals("7")){
+						//web请求的，微信钱包支付
+						setResult(2,intent);
+					}else{
+						//web方式支付成功 
+						setResult(3,intent);
 					}
+					//关闭当前webview窗口
+					WebActivity.this.finish();
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
                 return "";

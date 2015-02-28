@@ -72,5 +72,17 @@ public class JSONUtil {
 	public static String payTojsonString(int order,int status){
 		return "{\"order\":"+order+",\"status\":"+status+"}";
 	}
-
+	
+	
+	/**
+	 * 通过key 取 params json字符串中的值
+	 * @param params
+	 * @param key
+	 * @return
+	 * @throws JSONException 
+	 */
+	public static String jsonStringToSTring(String params,String key) throws JSONException{
+		JSONObject jobject= new JSONObject(params);
+		return  jobject.getString(key);
+	}
 }
