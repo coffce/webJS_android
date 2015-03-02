@@ -69,7 +69,7 @@ public class WebActivity extends Activity {
 				try {
 					String status = params.getString("status");
 					Intent intent = new Intent();
-					// 返回其
+					// 返回其结果
 					intent.putExtra("result", params.toString());
 					if (status.equals("0")) {
 						// 支付失败情况
@@ -134,7 +134,6 @@ public class WebActivity extends Activity {
 //		try {
 //			webView.loadUrl("file:///android_asset/error.html#"+ URLEncoder.encode("http://192.168.1.180:8081/phpdemo1/?goodsId=1006&price=100&channel=10005&gameid=10001&mode=1","utf-8"));
 //		} catch (UnsupportedEncodingException e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 	}

@@ -88,7 +88,6 @@ public class MainActivity extends Activity {
 					// “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
 					if (TextUtils.equals(resultStatus, "8000")) {
 						Log.i(TAG, "支付结果确认中");
-
 					} else {
 						// 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
 						Log.i(TAG, "支付失败");
@@ -219,11 +218,12 @@ public class MainActivity extends Activity {
 	           case 1:
 	        	   Log.i(TAG,"成功通过web发起支付宝 --- 成功 ");
 	        	   String result =data.getStringExtra("result");
+	        	   Log.i(TAG, "result="+result);
 		        	String subject="";
 		        	String price="";
 					try {
-						subject=JSONUtil.jsonStringToSTring(result, "subject");
-						price = JSONUtil.jsonStringToSTring(result, "price");
+						subject=JSONUtil.jsonStringToString(result, "goods");
+						price = JSONUtil.jsonStringToString(result, "price");
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -231,6 +231,7 @@ public class MainActivity extends Activity {
 					}
 	        	   //在此处获取订单 url=取订单网址
 	        	   getOrder("url====", subject, price);
+	        	   
 	        	   break;
 	           case 2:
 	        	   break;

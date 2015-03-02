@@ -31,11 +31,11 @@ public class Alipay {
 	// 商户收款账号
 	public static final String SELLER = "hndojo@foxmail.com ";
 	// 商户私钥，pkcs8格式
-	public static final String RSA_PRIVATE = "";
+	public static final String RSA_PRIVATE = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBANYtMTIMu/w/PkrUkvUA7ZfUV3JlJ9vs2cLNyDUHcX/G8EIAWdR8BBfggPb0XZy7c1FGti5YW1wg1TncgeoEtJ90X7c1sTWg+mKfdyn+zG0Nupl6YUnp/xXY8vbVtIXnRY+GZGpbE77vjEYtINnZw7HtuI+zeIyMQR17rgjaFgv7AgMBAAECgYEAo2hjin4wxyoxisJZRVjp7ddyyLLpEGDLXFfJEryVGhpcoN7Hqtjb/qOpgcG70qMqPq6mvQFo4weh572X2Uaxzzl2vmapPJ8yxy7juta8m36pMmIzG55r+Zrw4MB5L8+Kf6kQ7GHGqmXUPl6fyo5wd+4sir3/lzLH6xEzCDjatXECQQDwvyKrTjtsPqEGS/4FQjpQwUOm2lQBLb5Yqc3OYNrZzfHPG58vRUuLtlXI86kqcjEXmEZU9T4Bg/ubKVJp/HwFAkEA478YS+LSg944gytY5Lm/6kfWO9xpMGze7N0qNaFtGW+NJojVuXx9/uP5+zrqWRCnb7ex2eiUmW1I55VNwlbn/wJAHP2nWyGsnjhcg7ma+V8kTp03XFxmSU4M4fhwxC19rUTTnbEh1jtuAYEPi4dsE6R0rPa1YX223c/a+LBdME4rUQJAekcYkW3oHzsJ1otIgA2nF++X+63coE5j5oLcbc0NGZIGFAF11tAbieX3SscYGdfSPi4/hELWvgWqFgTYqhYlGwJBAM8oeAqn/rHG4HR5EfYE8QykbQzAEDClqF2nf7BAqwKPzVeYLHRvUIpZIc+PG6SwriThj4/aWSwytP6jOy2KDq0=";
 	// 支付宝公钥
-	public static final String RSA_PUBLIC = "";
+	public static final String RSA_PUBLIC = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAFljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9zpgmLCUYuLkxpLQIDAQAB";
 
-	private static final int SDK_PAY_FLAG = 1;
+	private static final int SDK_PAY_FLAG = 3;
 	
 	private static final int SDK_CHECK_FLAG = 2;
 	

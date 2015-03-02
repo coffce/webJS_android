@@ -81,7 +81,7 @@ public class JSONUtil {
 	 * @return
 	 * @throws JSONException 
 	 */
-	public static String jsonStringToSTring(String params,String key) throws JSONException{
+	public static String jsonStringToString(String params,String key) throws JSONException{
 		JSONObject jobject= new JSONObject(params);
 		return  jobject.getString(key);
 	}
