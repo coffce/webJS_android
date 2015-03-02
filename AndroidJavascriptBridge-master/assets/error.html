@@ -1,0 +1,152 @@
+<html>
+    <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+        <title>你的访问出错了</title>
+		<script type="text/javascript" src="file:///android_asset/jsb.js"></script>
+		<script type="text/javascript">
+		var browser={
+				   versions:function(){
+				   var u = navigator.userAgent, app = navigator.appVersion;
+				   return {//移动终端浏览器版本信息
+				   trident: u.indexOf('Trident') > -1, //IE内核
+				   presto: u.indexOf('Presto') > -1, //opera内核
+				   webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+				   gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+				   mobile: !!navigator.userAgent.match(/AppleWebKit.*Mobile./), //是否为移动终端
+				   ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+				   android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+				   iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
+				   iPad: u.indexOf('iPad') > -1, //是否iPad
+				   webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+				   };
+				   }(),
+				   language:(navigator.browserLanguage || navigator.language).toLowerCase()
+				}
+
+		var closeweb = 
+		{
+		  closeweb : function()
+			{
+				if ( browser.versions.android )
+				{
+					//在这里，可以根据json的格式来解析，应该执行某个操作
+					jsb.require('messagebox', {'status':'5'}, function(response){
+					});
+					return;
+				}
+			}
+		}
+		var openweb = 
+		{
+		  openweb : function()
+			{
+				//对应 file:///android_asset/error.html#xxxxx
+				//alert(window.location.href.substr(33));
+			  	window.location.href=window.location.href.substr(33);
+				//window.open(window.location.href.substr(33),'_self');
+				//window.open('http://www.baidu.com','_self');
+				return ;
+			}
+		}
+		</script>
+        <style type="text/css">
+		 p{
+            margin:0;
+            padding:0;
+        }
+        html,body{
+            background-color:#eaecef;
+        }
+        .wrap{
+            width:450px;
+            margin:0 auto;
+            padding-top:5px;
+			padding-bottom:5px;
+        }
+        .f20{
+            font-size:16px;
+			color:#b2b2b2
+        }
+        a {  
+		color: #339;  
+		text-decoration: none;  
+		}  
+		a:hover {  
+		text-decoration: underline;  
+		}  
+		
+		.button {  
+		display: inline-block;  
+		zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */  
+		*display: inline;  
+		vertical-align: baseline;  
+		margin: 0 2px;  
+		outline: none;  
+		cursor: pointer;  
+		text-align: center;  
+		text-decoration: none;  
+		font: 14px/100% Arial, Helvetica, sans-serif;  
+		padding: .5em 2em .55em;  
+		text-shadow: 0 1px 1px rgba(0,0,0,.3);  
+		-webkit-border-radius: .5em;   
+		-moz-border-radius: .5em;  
+		border-radius: .5em;  
+		-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);  
+		-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);  
+		box-shadow: 0 1px 2px rgba(0,0,0,.2);  
+		}  
+		.button:hover {  
+			text-decoration: none;  
+		}  
+		.button:active {  
+			position: relative;  
+			top: 1px;  
+		}  
+
+		.blue {  
+			color: #d9eef7;  
+			border: solid 1px #0076a3;  
+			background: #0095cd;  
+			background: -webkit-gradient(linear, left top, left bottom, from(#00adee), to(#0078a5));  
+			background: -moz-linear-gradient(top,  #00adee,  #0078a5);  
+			filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#00adee', endColorstr='#0078a5');  
+		}  
+		.blue:hover {  
+			background: #007ead;  
+			background: -webkit-gradient(linear, left top, left bottom, from(#0095cc), to(#00678e));  
+			background: -moz-linear-gradient(top,  #0095cc,  #00678e);  
+			filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#0095cc', endColorstr='#00678e');  
+		}  
+		.blue:active {  
+			color: #80bed6;  
+			background: -webkit-gradient(linear, left top, left bottom, from(#0078a5), to(#00adee));  
+			background: -moz-linear-gradient(top,  #0078a5,  #00adee);  
+			filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#0078a5', endColorstr='#00adee');  
+		}  
+        </style>
+
+        <body>            
+	
+<table border="0" style="height:100%;width:100%;valign:middle">
+<tr>
+  <td>
+	<div id="content" align="center">
+		<img src="file:///android_asset/apn.png" style="height:148px; width:148px"/>
+		<div class="wrap">
+			<div class="horizontal-box f20">
+				<h2>出错了，无法打开网页</h2>
+				<p>网络信号弱、不稳定或安全软件禁止访问网络。</p><br>
+            <p>您可在网络好时或关闭安全软件再重新加载该网页。</p>
+			<br>
+				<a id="closeBtn"  href="javascript:;" onclick="closeweb.closeweb();"  class="button blue">关闭</a>&nbsp;&nbsp;&nbsp;&nbsp;
+				<a id="refreshPayBtn"  href="javascript:;" onclick="openweb.openweb();"  class="button blue">重新加载支付</a>
+			</div>
+		</div>
+	</div>
+  </td>
+</tr>
+</table>
+        </body>
+    </head>
+</html>

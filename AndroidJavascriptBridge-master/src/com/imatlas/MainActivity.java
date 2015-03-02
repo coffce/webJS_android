@@ -179,6 +179,7 @@ public class MainActivity extends Activity {
 	
 	// 模拟网络访问地址：
 	private final String URL = "http://192.168.1.180:8081/phpdemo1/?";
+//	private final String URL = "http://192.168.1.180:8082/phpdemo1/?";
 
 	
 	@Override
@@ -212,25 +213,32 @@ public class MainActivity extends Activity {
 	        super.onActivityResult(requestCode, resultCode, data);  
 	        //requestCode标示请求的标示   resultCode表示有数据   
 	        if (requestCode == REQUSET ) {  
-	        	String result =data.getStringExtra("result");
-	        	String subject="";
-	        	String price="";
-				try {
-					subject=JSONUtil.jsonStringToSTring(result, "subject");
-					price = JSONUtil.jsonStringToSTring(result, "price");
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					Log.i(TAG,"解析json数据出现异常了。");
-				}
+	        	
 	           switch(resultCode){
 	           //1 - web请求，采用支付宝支付
 	           case 1:
 	        	   Log.i(TAG,"成功通过web发起支付宝 --- 成功 ");
+	        	   String result =data.getStringExtra("result");
+		        	String subject="";
+		        	String price="";
+					try {
+						subject=JSONUtil.jsonStringToSTring(result, "subject");
+						price = JSONUtil.jsonStringToSTring(result, "price");
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						Log.i(TAG,"解析json数据出现异常了。");
+					}
 	        	   //在此处获取订单 url=取订单网址
 	        	   getOrder("url====", subject, price);
 	        	   break;
 	           case 2:
+	        	   break;
+	           case 4:
+	        	   //用户自己关闭了网页，支付失败
+	        	   break;
+	           case 12:
+	        	   //用户访问支付网页出错。支付失败
 	        	   break;
 	           default:
 	        	   break;
